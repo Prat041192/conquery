@@ -24,9 +24,13 @@ export type AdditionalInfoHoverableNodeType = {
 const additionalInfos = (node: AdditionalInfoHoverableNodeType) => ({
   label: node.label,
   description: node.description,
-  matchingEntries: node.matchingEntries,
+  // matchingEntries: node.matchingEntries
+  matchingEntries: typeof (node.matchingEntries) === "undefined" ? 0 : node.matchingEntries, // changed by Prateek Narula - as part of inteview 
   dateRange: node.dateRange,
-  additionalInfos: node.additionalInfos,
+  additionalInfos: typeof (node.additionalInfos) === "undefined" ? [
+    { key: "No Information", value: "No further information is available" }
+  ] : node.additionalInfos
+  // additionalInfos : node.additionalInfos  // changed by Prateek Narula - as part of inteview 
 });
 
 // Decorates a component with a hoverable node.
@@ -43,7 +47,11 @@ const AdditionalInfoHoverable = (Component: any) => {
     onDisplayAdditionalInfos: () => {
       const node = ownProps.node;
 
-      if (!node.additionalInfos && isEmpty(node.matchingEntries)) return;
+      i// Code change by Prateek Narula - part of test - 22.10.2018
+      // Added has children condition so that the action will be dispatched
+      // if the child has been hovered although with null data
+      // if (!node.additionalInfos && isEmpty(node.matchingEntries)) return;
+      if (!node.additionalInfos && isEmpty(node.matchingEntries) && node.hasChildren) return;
 
       dispatch(actions.displayAdditionalInfos(additionalInfos(node)))
     },
