@@ -47,7 +47,7 @@ const AdditionalInfoHoverable = (Component: any) => {
     onDisplayAdditionalInfos: () => {
       const node = ownProps.node;
 
-      i// Code change by Prateek Narula - part of test - 22.10.2018
+      // Code change by Prateek Narula - part of test - 22.10.2018
       // Added has children condition so that the action will be dispatched
       // if the child has been hovered although with null data
       // if (!node.additionalInfos && isEmpty(node.matchingEntries)) return;
